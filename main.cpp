@@ -1,9 +1,9 @@
-#include <QGuiApplication>
-#include <QQmlApplicationEngine>
 #include <QDebug>
-#include <QTranslator>
+#include <QGuiApplication>
 #include <QProcess>
+#include <QQmlApplicationEngine>
 #include <QQuickStyle>
+#include <QTranslator>
 
 #include "add.h"
 
@@ -16,8 +16,7 @@ struct MArguments // Command Arguments
 
 MArguments MAppArgs = {false, false, false};
 
-void parseArguments()
-{
+void parseArguments() {
   // Get Command Arguments
   QStringList arguments = QCoreApplication::arguments();
 
@@ -31,16 +30,14 @@ void parseArguments()
   MAppArgs.On_Off = arguments.at(3) == "on";
 }
 
-QString shell_in_main(QString text)
-{
+QString shell_in_main(QString text) {
   QProcess process;
   process.start(text);
   process.waitForFinished();
   return QString::fromLocal8Bit(process.readAllStandardOutput());
 }
 
-int main(int argc, char *argv[])
-{
+int main(int argc, char *argv[]) {
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
   QGuiApplication app(argc, argv);
@@ -50,52 +47,40 @@ int main(int argc, char *argv[])
   QQuickStyle::setStyle("Universal");
   const QUrl url(QStringLiteral("qrc:/main.qml"));
   QObject::connect(
-    &engine, &QQmlApplicationEngine::objectCreated,
-    &app, [url](QObject * obj, const QUrl & objUrl)
-  {
-    if (!obj && url == objUrl)
-      QCoreApplication::exit(-1);
-  },
-  Qt::QueuedConnection);
+      &engine, &QQmlApplicationEngine::objectCreated, &app,
+      [url](QObject *obj, const QUrl &objUrl) {
+        if (!obj && url == objUrl)
+          QCoreApplication::exit(-1);
+      },
+      Qt::QueuedConnection);
 
   parseArguments();
 
   QString qmFilename;
   static QTranslator *translator;
-  if (translator != NULL)
-  {
+  if (translator != NULL) {
     qApp->removeTranslator(translator);
     delete translator;
     translator = NULL;
   }
   translator = new QTranslator;
   QString runPath;
-  if (!MAppArgs.LangCn)
-  {
+  if (!MAppArgs.LangCn) {
     runPath = ":/mrnoplay-blacklist-ui_en_US.qm";
-  }
-  else
-  {
+  } else {
     runPath = ":/mrnoplay-blacklist-ui_zh_CN.qm";
   }
-  if (translator->load(runPath))
-  {
+  if (translator->load(runPath)) {
     qApp->installTranslator(translator);
   }
 
-  if (!MAppArgs.FromMr)
-  {
+  if (!MAppArgs.FromMr) {
     const QUrl urlNotFromMr(QStringLiteral("qrc:/not-from-mr.qml"));
     engine.load(urlNotFromMr);
-  }
-  else
-  {
-    if (!MAppArgs.On_Off)
-    {
+  } else {
+    if (!MAppArgs.On_Off) {
       engine.load(url);
-    }
-    else
-    {
+    } else {
       const QUrl urlBlocking(QStringLiteral("qrc:/blocking.qml"));
       engine.load(urlBlocking);
     }
@@ -103,13 +88,16 @@ int main(int argc, char *argv[])
   return app.exec();
 }
 
-
 /*
  * Windeployqt
- * C:\Qt\5.9.9\5.9.9\mingw53_32\bin\windeployqt.exe  C:\Users\tianzeds\Documents\GitHub\release-mrnoplay-blacklist-ui\release\mrnoplay-blacklist-ui.exe --qmldir C:\Qt\5.9.9\5.9.9\mingw53_32\qml
+ * C:\Qt\5.9.9\5.9.9\mingw53_32\bin\windeployqt.exe
+ * C:\Users\tianzeds\Documents\GitHub\release-mrnoplay-blacklist-ui\release\mrnoplay-blacklist-ui.exe
+ * --qmldir C:\Qt\5.9.9\5.9.9\mingw53_32\qml
  */
 
 /*
  * Run on macOS
- * open /Users/we/Documents/GitHub/mrnoplay-blacklist-ui/release/mrnoplay-blacklist-ui.app --args cn _COMMAND
+ * open
+ * /Users/we/Documents/GitHub/mrnoplay-blacklist-ui/release/mrnoplay-blacklist-ui.app
+ * --args cn _COMMAND
  */
