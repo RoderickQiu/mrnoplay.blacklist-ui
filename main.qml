@@ -8,7 +8,9 @@ Window {
     visible: true
     width: 320
     height: 480
-    title: qsTr("Mr Noplay Blacklist")
+	title: (Qt.platform.os == "mac" ? "" : " ") + qsTr("Mr Noplay Blacklist")
+
+	flags: Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
 
     property string toAddName: "appname.app";
     onToAddNameChanged: {
@@ -20,6 +22,8 @@ Window {
         }
         listnames.append({name: toAddName})
     }
+
+	FontLoader { id: sourceHan; source: "qrc:/assets/SourceHanSansSC-Regular.ttf" }
 
     //way: 0=false=blacklist, 1=true=whitelist
     property int way: 0;
@@ -93,6 +97,7 @@ Window {
                 id: label01
                 height: 20
                 text: qsTr("Only Selected Apps are: ")
+				font.family: sourceHan.name
                 anchors.top: parent.top
                 anchors.topMargin: 5
                 rightPadding: 4
@@ -149,7 +154,7 @@ Window {
                                 text: cut(lefttextsinlist.children[1].text)
                                 font.bold: Qt.platform.os !== "osx" ? true : false;
                                 font.pixelSize: Qt.platform.os == "osx" ? 1 : 11;
-                                color: Qt.platform.os == "osx" ? "white" : "black";
+								color: Qt.platform.os == "osx" ? "white" : "black";
                             }
 
                             Text {
@@ -158,7 +163,7 @@ Window {
                                 font.pixelSize: Qt.platform.os !== "osx" ? 5 : 13;
                                 color: Qt.platform.os !== "osx" ? "grey" : "black";
                                 anchors.top: parent.top;
-                                anchors.topMargin: Qt.platform.os !== "osx" ? 12 : 0;
+								anchors.topMargin: Qt.platform.os !== "osx" ? 12 : 0;
                             }
 
                             height: 20
@@ -170,7 +175,7 @@ Window {
                             height: 20
                             width: 20
 
-                            Image {
+							Image {
                                 id: imgdelete
                                 source: "assets/delete.png"
                                 height: 12
@@ -207,17 +212,19 @@ Window {
                 width: 90
                 height: 30
                 text: qsTr("Add an App")
+				font.family: sourceHan.name
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 30
                 onClicked: {
                     var component = Qt.createComponent("add.qml");
                     component.createObject(add).show();
-                }
-            }
+				}
+			}
 
-            Text {
-                id: label02
-                text: qsTr("Blocks are on only when Mr Noplay is running in workmode.")
+			Text {
+				id: label02
+				text: qsTr("Blocks are on only when Mr Noplay is running in workmode.")
+				font.family: sourceHan.name
                 anchors.bottom: parent.bottom
                 anchors.bottomMargin: 10
                 anchors.left: parent.left
@@ -230,6 +237,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:2;anchors_y:10}D{i:5;anchors_y:60}D{i:1;anchors_y:15}
+	D{i:1;anchors_y:15}D{i:5;anchors_y:60}D{i:2;anchors_y:10}
 }
 ##^##*/

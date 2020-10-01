@@ -7,12 +7,16 @@ Window {
     id: blocking
     visible: true
     width: 320
-    height: 480
-    title: qsTr("Mr Noplay Blacklist")
+	height: 480
+	title: (Qt.platform.os == "mac" ? "" : " ") + qsTr("Mr Noplay Blacklist")
+
+	flags: Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
 
     AddTransfer {
         id: addtrans
     }
+
+	FontLoader { id: sourceHan; source: "qrc:/assets/SourceHanSansSC-Regular.ttf" }
 
     property int way: 0;
     property var db;
@@ -45,21 +49,12 @@ Window {
     Text {
         id: blockingtext
         x: 0
-        y: 233
+		y: 174
         width: 320
         height: 15
         text: qsTr("App blocking is running now.")
+		font.family: sourceHan.name
         horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
-    }
-
-    Image {
-        id: mrlogo
-        x: 110
-        y: 126
-        width: 100
-        height: 100
-        fillMode: Image.PreserveAspectFit
-        source: "assets/logo.png"
     }
 }

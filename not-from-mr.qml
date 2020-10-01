@@ -6,23 +6,21 @@ Window {
     visible: true
     width: 320
     height: 480
-    title: "Oops!"
+	title: (Qt.platform.os == "mac" ? "" : " ") + "Oops!"
+
+	flags: Qt.Dialog | Qt.MSWindowsFixedSizeDialogHint | Qt.WindowTitleHint | Qt.WindowCloseButtonHint
+
+	FontLoader { id: sourceHan; source: "/assets/SourceHanSansSC-Regular.ttf" }
 
     Text {
         id: onlyfrommr
-        x: 35
-        y: 233
+		x: 0
+		y: 174
+		width: 320
+		height: 13
         text: qsTr("This app can only be opened from Mr Noplay")
+		font.family: sourceHan.name
+		horizontalAlignment: Text.AlignHCenter
         font.pixelSize: 12
-    }
-
-    Image {
-        id: mrlogo
-        x: 110
-        y: 126
-        width: 100
-        height: 100
-        fillMode: Image.PreserveAspectFit
-        source: "assets/logo.png"
     }
 }

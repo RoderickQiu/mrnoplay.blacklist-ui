@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="mrnoplay-blacklist-ui_zh_CN">
+<TS version="2.1" language="zh" sourcelanguage="en">
 <context>
     <name>add</name>
     <message>
@@ -52,7 +52,7 @@
     <message>
         <location filename="main.qml" line="95"/>
         <source>Only Selected Apps are: </source>
-        <translation>只有选择的应用是：</translation>
+        <translation type="unfinished">只有选择的应用是： </translation>
     </message>
     <message>
         <location filename="main.qml" line="111"/>
@@ -72,7 +72,7 @@
     <message>
         <location filename="main.qml" line="220"/>
         <source>Blocks are on only when Mr Noplay is running in workmode.</source>
-        <translation>所有设置仅在 Mr Noplay 以工作模式计时时启用。</translation>
+        <translation>所有设置仅在宿主应用以工作模式计时时启用。</translation>
     </message>
 </context>
 <context>
@@ -80,7 +80,7 @@
     <message>
         <location filename="not-from-mr.qml" line="15"/>
         <source>This app can only be opened from Mr Noplay</source>
-        <translation>只允许通过 Mr Noplay 打开此应用。</translation>
+        <translation type="unfinished">只允许通过宿主应用打开此应用</translation>
     </message>
 </context>
 </TS>

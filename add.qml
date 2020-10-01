@@ -7,9 +7,12 @@ import AddTransfer 1.0
 Window {
     id: add
     visible: true
-    width: 246
-    height: 100
-    title: qsTr("Mr Noplay Blacklist")
+	width: 207
+	height: 100
+	color: "#eeeeee"
+	title: (Qt.platform.os == "mac" ? "" : " ") + qsTr("Mr Noplay Blacklist")
+
+	flags: Qt.Window | Qt.FramelessWindowHint | Qt.WindowMinimizeButtonHint
 
     property string bundleId: "com.scrisstudio.exampleapp";
 
@@ -22,24 +25,52 @@ Window {
         }
     }
 
+	FontLoader { id: sourceHan; source: "qrc:/assets/SourceHanSansSC-Regular.ttf" }
+
     Column {
         id: container
+		x: 0
         y: 4
-        width: 320
-        height: 400
-        anchors.top: parent.top
-        anchors.topMargin: 4
+		width: 207
+		height: 100
+		anchors.top: parent.top
+		anchors.topMargin: 0
+
+		Button {
+			height: 20
+			width: 20
+			anchors.right: parent.right
+			anchors.rightMargin: 4
+			anchors.top: parent.top
+			anchors.topMargin: 4
+
+			Image {
+				id: imgWinClose
+				source: "assets/delete.png"
+				height: 12
+				width: 12
+				anchors.right: parent.right
+				anchors.rightMargin: 4
+				anchors.top: parent.top
+				anchors.topMargin: 4
+			}
+
+			onClicked: {
+				add.close()
+			}
+		}
 
         Row {
             id: titlebar
             y: 10
-            width: 320
-            height: 20
+			width: 125
+			height: 20
 
             Text {
                 id: label02
                 height: 20
-                text: qsTr("Add an App")
+				text: qsTr("Add an App")
+				font.family: sourceHan.name
                 font.bold: true
                 rightPadding: 4
                 topPadding: 0
@@ -63,7 +94,8 @@ Window {
                 x: 110
                 width: 80
                 height: 30
-                text: qsTr("Submit")
+				text: qsTr("Submit")
+				font.family: sourceHan.name
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 onClicked: {
@@ -75,10 +107,10 @@ Window {
             FileDialog {
                 id: filedialog
                 title: "Please choose a file"
-                folder: shortcuts.home
-                onAccepted: {
-                    result.text = filedialog.fileUrl;
-                    result.text = result.text.slice(7);
+				folder: shortcuts.home
+				nameFilters: Qt.platform.os !== "osx" ? "Executables (*.exe *.dll *.msi)" : ""
+				onAccepted: {
+					result.text = String(filedialog.fileUrl).slice(7);
                 }
                 visible: false
             }
@@ -88,7 +120,8 @@ Window {
                 x: 15
                 width: 80
                 height: 30
-                text: qsTr("Choose")
+				text: qsTr("Choose")
+				font.family: sourceHan.name
                 anchors.top: parent.top
                 anchors.topMargin: 0
                 onClicked: filedialog.visible = true;
@@ -96,8 +129,11 @@ Window {
 
             Text {
                 id: result
-                width: 210
-                height: 26
+				x: 15
+				width: 175
+				height: 26
+				wrapMode: Text.WrapAnywhere
+				fontSizeMode: Text.HorizontalFit
                 elide: Text.ElideNone
                 anchors.left: parent.left
                 anchors.leftMargin: 15
@@ -108,7 +144,7 @@ Window {
                 font.bold: false
                 verticalAlignment: Text.AlignTop
                 horizontalAlignment: Text.AlignLeft
-                font.pixelSize: 12
+				font.pixelSize: 5
                 rightPadding: 0
                 topPadding: 0
                 leftPadding: 0
@@ -120,6 +156,6 @@ Window {
 
 /*##^##
 Designer {
-    D{i:1;anchors_y:15}D{i:7;anchors_y:0}D{i:8;anchors_x:15}D{i:5;anchors_y:0}
+	D{i:1;anchors_y:15}D{i:5;anchors_y:0}D{i:7;anchors_y:0}D{i:8;anchors_x:15}
 }
 ##^##*/

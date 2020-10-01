@@ -4,6 +4,7 @@
         <file>not-from-mr.qml</file>
         <file>assets/logo.png</file>
         <file>assets/delete.png</file>
+        <file>assets/SourceHanSansSC-Regular.ttf</file>
         <file>add.qml</file>
         <file>mrnoplay-blacklist-ui_en_US.qm</file>
         <file>mrnoplay-blacklist-ui_zh_CN.qm</file>

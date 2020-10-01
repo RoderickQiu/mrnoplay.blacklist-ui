@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="mrnoplay-blacklist-ui_en_US">
+<TS version="2.1" language="en_001">
 <context>
     <name>add</name>
     <message>
@@ -62,7 +62,7 @@
     <message>
         <location filename="main.qml" line="220"/>
         <source>Blocks are on only when Mr Noplay is running in workmode.</source>
-        <translation>Blocks are on only when Mr Noplay is running in workmode.</translation>
+        <translation>Blocks are on only when the host app is running in workmode.</translation>
     </message>
     <message>
         <location filename="main.qml" line="111"/>
@@ -80,7 +80,7 @@
     <message>
         <location filename="not-from-mr.qml" line="15"/>
         <source>This app can only be opened from Mr Noplay</source>
-        <translation>This app can only be opened from Mr Noplay</translation>
+        <translation type="unfinished">This app can only be opened from the host app</translation>
     </message>
 </context>
 </TS>

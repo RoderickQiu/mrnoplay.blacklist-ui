@@ -18,8 +18,6 @@ SOURCES += \
         add.cpp \
         main.cpp
 
-RESOURCES += qml.qrc
-
 TRANSLATIONS += \
     mrnoplay-blacklist-ui_zh_CN.ts \
     mrnoplay-blacklist-ui_en_US.ts
@@ -59,3 +57,5 @@ DISTFILES += \
 HEADERS += \
     add.h \
     version.h
+
+RESOURCES += qml.qrc
