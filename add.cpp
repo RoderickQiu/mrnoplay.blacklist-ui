@@ -4,6 +4,46 @@
 #include <QGuiApplication>
 #include <QProcess>
 
+#ifdef Q_OS_WIN32
+#include "windows.h"
+#include <tlhelp32.h>
+#endif
+
+bool isProcessRunning(QString processName) {
+#ifdef Q_OS_WIN32
+  bool ret = false;
+  HANDLE proHandle = CreateToolhelp32Snapshot(TH32CS_SNAPPROCESS, 0);
+  if ((HANDLE)-1 == proHandle) {
+    return false;
+  }
+  PROCESSENTRY32 pInfo;
+  pInfo.dwSize = sizeof(PROCESSENTRY32);
+
+  BOOL bResult = Process32First(proHandle, &pInfo);
+  if (!bResult) {
+    return false;
+  }
+
+  QString curProcessName;
+  while (bResult) {
+    curProcessName = QString("%1").arg(QString::fromUtf16(
+        reinterpret_cast<const unsigned short *>(pInfo.szExeFile)));
+
+    if (curProcessName == processName) {
+      ret = true;
+      break;
+    }
+
+    bResult = Process32Next(proHandle, &pInfo);
+  }
+
+  CloseHandle(proHandle);
+  return ret;
+#else
+  return true;
+#endif
+}
+
 AddTransfer::AddTransfer() { _text = ""; }
 
 AddTransfer::~AddTransfer() {}
@@ -27,6 +67,16 @@ QString shell(QString text) {
 void shellWithArgumentsWithoutResponse(QString text, QStringList args) {
   QProcess *process = new QProcess;
   process->start(text, args);
+#ifdef Q_OS_WIN32
+  Sleep(1000);
+  while (true) {
+    if (!isProcessRunning("mrnoplay-blacklist-killer-windows.exe")) {
+      process = new QProcess;
+      process->start(text, args);
+    }
+    Sleep(2000);
+  }
+#endif
 }
 
 void AddTransfer::goTerminal(QString gttext) {

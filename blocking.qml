@@ -5,7 +5,7 @@ import AddTransfer 1.0
 
 Window {
     id: blocking
-    visible: true
+	visible: false
     width: 320
 	height: 480
 	title: (Qt.platform.os == "mac" ? "" : " ") + qsTr("Mr Noplay Blacklist")
